@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+artifacts/
+results/
+data/corpus/
+data/eval/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
