@@ -1,8 +1,8 @@
-import os
 from typing import List, Protocol
+
 from hybridrag.config import settings
-from hybridrag.models import FusedResult, Answer, Citation
-from hybridrag.generate.prompts import PROMPTS
+from hybridrag.models import Answer, Citation, FusedResult
+
 
 class Generator(Protocol):
     def generate(self, query: str, candidates: List[FusedResult], prompt_version: str) -> Answer:
@@ -12,10 +12,8 @@ class TemplateGenerator:
     def generate(self, query: str, candidates: List[FusedResult], prompt_version: str = "v3_abstain_guard") -> Answer:
         # Check abstention threshold based on top score
         top_score = candidates[0].score if candidates else -999.0
-        abstained = False
-        
+
         if not candidates or top_score < settings.ABSTAIN_THRESHOLD:
-            abstained = True
             text = f"I cannot answer this question based on the available internal documentation. The query '{query}' did not match any verified internal policy records with sufficient confidence. Please consult the HR, Finance, or Security department portals for further guidance."
             return Answer(
                 text=text,
@@ -40,7 +38,7 @@ class TemplateGenerator:
             # extract first 2 sentences or snippet
             snippet_sentences = [s.strip() for s in content.split(".") if s.strip()]
             snippet = ". ".join(snippet_sentences[:2]) + "."
-            
+
             if not snippet:
                 continue
 
@@ -61,7 +59,6 @@ class TemplateGenerator:
                 sentences.append(sentence_text)
 
         if not sentences:
-            abstained = True
             text = "I cannot answer this question based on the available internal documentation due to lack of verifiable span matches."
             return Answer(
                 text=text,
@@ -93,7 +90,7 @@ class AnthropicGenerator:
         # Fallback to TemplateGenerator if no API key set
         if not self.api_key:
             return TemplateGenerator().generate(query, candidates, prompt_version)
-        
+
         # If API key is present, can call Anthropic API (simulated here with template if library not installed)
         return TemplateGenerator().generate(query, candidates, prompt_version)
 

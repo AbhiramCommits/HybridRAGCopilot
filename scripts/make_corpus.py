@@ -1,6 +1,6 @@
 import os
+
 import yaml
-import random
 
 CATEGORIES = {
     "hr_policy": [
@@ -144,11 +144,11 @@ def generate_document_text(category, title, owner, effective_date):
         "\n## 1. Overview and Purpose",
         f"This document defines the official enterprise policy and operating guidelines for {title.lower()}. Compliance is mandatory across all departments. The primary objective is to maintain operational excellence, regulatory compliance, and security standards.",
         "\n## 2. Scope and Applicability",
-        f"This policy applies to all full-time employees, contractors, and third-party vendors associated with the company. Exceptions must be approved in writing by the department head and legal counsel. Thresholds and limits defined herein supersede all prior versions.",
+        "This policy applies to all full-time employees, contractors, and third-party vendors associated with the company. Exceptions must be approved in writing by the department head and legal counsel. Thresholds and limits defined herein supersede all prior versions.",
         "\n## 3. Core Guidelines and Procedures",
-        f"- **Policy Threshold:** The standard operating limit is set at $5,000 for standard transactions, with a maximum allowable cap of $25,000 under exceptional executive approval.",
+        "- **Policy Threshold:** The standard operating limit is set at $5,000 for standard transactions, with a maximum allowable cap of $25,000 under exceptional executive approval.",
         f"- **Timeline and SLA:** All requests must be submitted within 14 business days of occurrence. Review cycles are completed within 5 business days by {owner}.",
-        f"- **Compliance & Penalty:** Non-compliance results in formal administrative review, potential revocation of privileges, and possible disciplinary action up to termination.",
+        "- **Compliance & Penalty:** Non-compliance results in formal administrative review, potential revocation of privileges, and possible disciplinary action up to termination.",
         "\n## 4. Exceptions and Escalation",
         f"For urgent escalations or special accommodations, contact {owner} directly via internal channels. Escalation tickets are triaged within 24 hours. Version identifier: v2.4-RELEASE.",
         "\n## 5. Document Control and Revision History",

@@ -1,14 +1,15 @@
 import os
-import time
+
 from fastapi import FastAPI, HTTPException
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 from starlette.responses import Response
-from hybridrag.models import Answer, Query, Citation
-from hybridrag.retrieval.hybrid import HybridRetriever
+
+from hybridrag.api.observability import log_request_middleware
+from hybridrag.api.routes import FeedbackRequest, QueryRequest
 from hybridrag.generate.generator import get_generator
 from hybridrag.ingest.pipeline import ingest_all
-from hybridrag.api.routes import QueryRequest, FeedbackRequest
-from hybridrag.api.observability import log_request_middleware
+from hybridrag.models import Answer
+from hybridrag.retrieval.hybrid import HybridRetriever
 
 app = FastAPI(title="HybridRAG Enterprise Copilot", version="0.1.0")
 
@@ -27,10 +28,9 @@ def healthz():
 
 @app.post("/query", response_model=Answer)
 def query_endpoint(req: QueryRequest):
-    t0 = time.time()
     try:
         results, timings = retriever.retrieve(req.query, k_out=req.top_k, mode=req.mode)
-        
+
         for stage, duration in timings.timings.items():
             LATENCY_HISTOGRAM.labels(stage=stage).observe(duration)
 

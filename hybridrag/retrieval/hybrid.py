@@ -1,11 +1,13 @@
 import time
-from typing import List, Dict, Any
-from hybridrag.models import RetrievalResult, FusedResult, StageTimings
-from hybridrag.retrieval.dense import DenseRetriever
+from typing import List
+
+from hybridrag.models import FusedResult, StageTimings
 from hybridrag.retrieval.bm25 import BM25Retriever
-from hybridrag.retrieval.structured import StructuredRetriever
+from hybridrag.retrieval.dense import DenseRetriever
 from hybridrag.retrieval.fusion import reciprocal_rank_fusion
 from hybridrag.retrieval.rerank import CrossEncoderReranker
+from hybridrag.retrieval.structured import StructuredRetriever
+
 
 class HybridRetriever:
     def __init__(self, embedding_mode: str = "base"):
@@ -15,10 +17,10 @@ class HybridRetriever:
         self.reranker = CrossEncoderReranker()
 
     def retrieve(
-        self, 
-        query: str, 
-        k_each: int = 30, 
-        k_out: int = 20, 
+        self,
+        query: str,
+        k_each: int = 30,
+        k_out: int = 20,
         mode: str = "hybrid_rerank"
     ) -> tuple[List[FusedResult], StageTimings]:
         timings = {}

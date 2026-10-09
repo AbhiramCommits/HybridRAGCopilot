@@ -1,6 +1,7 @@
-import os
 import json
+import os
 import random
+
 
 def create_eval_questions():
     os.makedirs("data/eval", exist_ok=True)

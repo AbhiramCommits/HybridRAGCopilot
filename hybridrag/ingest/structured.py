@@ -1,9 +1,11 @@
-import os
 import random
-from hybridrag.ingest.db import get_engine, Base
-from sqlalchemy import Column, Integer, String, Float, Text
+
+from sqlalchemy import Column, Float, Integer, String, Text
 from sqlalchemy.orm import sessionmaker
+
+from hybridrag.ingest.db import Base, get_engine
 from hybridrag.models import Chunk
+
 
 class Employee(Base):
     __tablename__ = "employees"

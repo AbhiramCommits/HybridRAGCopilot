@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def recall_at_k(retrieved_ids: list[str], gold_ids: list[str], k: int) -> float:
     if not gold_ids:
         return 1.0 if not retrieved_ids[:k] else 0.0
@@ -43,7 +44,7 @@ def faithfulness(answer_text: str, citations: list, retrieved_chunks: list) -> f
     sentences = [s.strip() for s in answer_text.split(".") if s.strip()]
     if not sentences or not citations:
         return 1.0 if not citations else 0.0
-    
+
     supported = 0
     chunk_map = {c.chunk_id: c for c in retrieved_chunks}
     for sent in sentences:

@@ -1,22 +1,12 @@
-import pytest
-import os
-import numpy as np
 from fastapi.testclient import TestClient
-from hybridrag.models import Chunk, Query, Citation, RetrievalResult, FusedResult
-from hybridrag.ingest.chunker import chunk_text
-from hybridrag.retrieval.fusion import reciprocal_rank_fusion
-from hybridrag.retrieval.dense import DenseRetriever
-from hybridrag.retrieval.bm25 import BM25Retriever
-from hybridrag.retrieval.structured import StructuredRetriever
-from hybridrag.retrieval.rerank import CrossEncoderReranker
-from hybridrag.retrieval.hybrid import HybridRetriever
+
+from hybridrag.api.app import app
+from hybridrag.eval.scoring import abstention_accuracy, ndcg_at_k, recall_at_k, reciprocal_rank
 from hybridrag.generate.generator import TemplateGenerator
 from hybridrag.generate.prompts import PROMPTS
-from hybridrag.eval.scoring import (
-    recall_at_k, reciprocal_rank, ndcg_at_k,
-    citation_precision, faithfulness, abstention_accuracy
-)
-from hybridrag.api.app import app
+from hybridrag.ingest.chunker import chunk_text
+from hybridrag.models import Chunk, FusedResult, RetrievalResult
+from hybridrag.retrieval.fusion import reciprocal_rank_fusion
 
 client = TestClient(app)
 

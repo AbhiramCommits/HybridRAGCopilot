@@ -1,6 +1,7 @@
-import logging
 import json
+import logging
 import time
+
 from fastapi import Request
 
 logging.basicConfig(level=logging.INFO)
@@ -10,7 +11,7 @@ async def log_request_middleware(request: Request, call_next):
     start_time = time.time()
     response = await call_next(request)
     duration = time.time() - start_time
-    
+
     log_data = {
         "method": request.method,
         "path": request.url.path,

@@ -1,6 +1,7 @@
-import re
 from typing import List
+
 from hybridrag.models import Chunk
+
 
 def chunk_text(text: str, doc_id: str, metadata: dict, chunk_size: int = 320, overlap: int = 64) -> List[Chunk]:
     # Extract front matter if present
@@ -56,13 +57,13 @@ def chunk_text(text: str, doc_id: str, metadata: dict, chunk_size: int = 320, ov
         words = sec_text.split()
         if not words:
             continue
-        
+
         # Sliding window over words
         i = 0
         while i < len(words):
             window_words = words[i:i + chunk_size]
             chunk_content = " ".join(window_words)
-            
+
             chunk_id = f"{doc_id}-CHK-{chunk_counter:03d}"
             chunks.append(Chunk(
                 chunk_id=chunk_id,
