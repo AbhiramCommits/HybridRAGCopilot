@@ -1,8 +1,11 @@
 import os
 import pickle
+
 import pandas as pd
+
 from hybridrag.config import settings
-from hybridrag.models import RetrievalResult, Chunk
+from hybridrag.models import Chunk, RetrievalResult
+
 
 class BM25Retriever:
     def __init__(self):
@@ -32,7 +35,7 @@ class BM25Retriever:
         # Light normalization: lowercase, keep alphanumeric and currency tokens
         tokens = query.lower().split()
         scores = self.bm25.get_scores(tokens)
-        
+
         # Sort indices by score descending
         sorted_indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
 

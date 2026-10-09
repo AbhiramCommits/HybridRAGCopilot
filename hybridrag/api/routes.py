@@ -1,6 +1,7 @@
-from typing import List, Optional
+from typing import Optional
+
 from pydantic import BaseModel, Field
-from hybridrag.models import Answer, Citation
+
 
 class QueryRequest(BaseModel):
     query: str

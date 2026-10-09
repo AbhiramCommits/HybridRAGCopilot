@@ -1,5 +1,7 @@
-from typing import Optional, List, Dict, Any
+from typing import Dict, List, Optional
+
 from pydantic import BaseModel, Field
+
 
 class Chunk(BaseModel):
     chunk_id: str

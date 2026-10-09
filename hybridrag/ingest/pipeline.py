@@ -1,15 +1,16 @@
-import os
 import glob
+import os
 import pickle
-import numpy as np
-import pandas as pd
+
 import faiss
-from sentence_transformers import SentenceTransformer
+import pandas as pd
 from rank_bm25 import BM25Okapi
+from sentence_transformers import SentenceTransformer
+
 from hybridrag.config import settings
-from hybridrag.models import Chunk
 from hybridrag.ingest.chunker import chunk_text
-from hybridrag.ingest.structured import seed_structured_data, load_structured_chunks
+from hybridrag.ingest.structured import load_structured_chunks, seed_structured_data
+
 
 def load_encoder(mode: str = "base"):
     if mode == "lora" and os.path.exists(settings.LORA_MODEL_PATH):
@@ -23,7 +24,6 @@ def load_encoder(mode: str = "base"):
                 def __init__(self, m, base_name):
                     self.m = m
                     self.tokenizer = AutoTokenizer.from_pretrained(base_name)
-                    import torch
                 def encode(self, sentences, **kwargs):
                     import torch
                     encoded = self.tokenizer(sentences, padding=True, truncation=True, return_tensors="pt")
@@ -71,7 +71,7 @@ def ingest_all(mode: str = "base"):
     # 3. Generate embeddings
     encoder = load_encoder(mode)
     contents = [c.content for c in all_chunks]
-    
+
     # Handle different encoder return types
     if hasattr(encoder, "encode"):
         embeddings = encoder.encode(contents, show_progress_bar=True, convert_to_numpy=True)

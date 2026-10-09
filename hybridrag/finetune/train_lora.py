@@ -1,11 +1,13 @@
-import os
 import json
-import torch
-from torch.utils.data import DataLoader
-from sentence_transformers import SentenceTransformer, InputExample, losses
+import os
+
 from peft import LoraConfig, get_peft_model
+from sentence_transformers import InputExample, SentenceTransformer, losses
+from torch.utils.data import DataLoader
+
 from hybridrag.config import settings
 from hybridrag.finetune.pairs import build_pairs
+
 
 def train_lora():
     if not os.path.exists("data/eval/pairs_train.jsonl"):

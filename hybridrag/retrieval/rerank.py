@@ -1,9 +1,11 @@
-import time
 from typing import List
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
 import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
 from hybridrag.config import settings
-from hybridrag.models import FusedResult, RetrievalResult
+from hybridrag.models import FusedResult
+
 
 class CrossEncoderReranker:
     def __init__(self):
@@ -17,7 +19,7 @@ class CrossEncoderReranker:
             return []
 
         pairs = [[query, c.chunk.content if c.chunk else ""] for c in candidates]
-        
+
         with torch.no_grad():
             inputs = self.tokenizer(pairs, padding=True, truncation=True, return_tensors="pt", max_length=512)
             scores = self.model(**inputs).logits.squeeze(-1)

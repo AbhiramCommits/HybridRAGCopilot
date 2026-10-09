@@ -1,6 +1,8 @@
 import os
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base
+
 from hybridrag.config import settings
 
 # Fallback to sqlite if postgres is not available

@@ -1,9 +1,11 @@
 from typing import List, Optional
+
 from hybridrag.models import FusedResult, RetrievalResult
 
+
 def reciprocal_rank_fusion(
-    result_lists: List[List[RetrievalResult]], 
-    k: int = 60, 
+    result_lists: List[List[RetrievalResult]],
+    k: int = 60,
     weights: Optional[List[float]] = None
 ) -> List[FusedResult]:
     if not result_lists:

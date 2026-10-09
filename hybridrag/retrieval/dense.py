@@ -1,11 +1,12 @@
 import os
+
 import faiss
 import pandas as pd
-import numpy as np
-from sentence_transformers import SentenceTransformer
+
 from hybridrag.config import settings
-from hybridrag.models import RetrievalResult, Chunk
 from hybridrag.ingest.pipeline import load_encoder
+from hybridrag.models import Chunk, RetrievalResult
+
 
 class DenseRetriever:
     def __init__(self, mode: str = "base"):

@@ -1,8 +1,10 @@
 import os
-import re
+
 import pandas as pd
+
 from hybridrag.config import settings
-from hybridrag.models import RetrievalResult, Chunk
+from hybridrag.models import Chunk, RetrievalResult
+
 
 class StructuredRetriever:
     def __init__(self):

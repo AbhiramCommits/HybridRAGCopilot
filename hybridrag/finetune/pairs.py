@@ -1,14 +1,16 @@
-import os
 import json
+import os
 import random
+
 
 def build_pairs():
     os.makedirs("data/eval", exist_ok=True)
-    
+
     # Generate 2,500 train pairs and 500 held-out pairs from corpus chunks
-    from hybridrag.ingest.pipeline import load_structured_chunks
-    from hybridrag.ingest.chunker import chunk_text
     import glob
+
+    from hybridrag.ingest.chunker import chunk_text
+    from hybridrag.ingest.pipeline import load_structured_chunks
 
     chunks = []
     for path in glob.glob(os.path.join("data/corpus", "*.md")):

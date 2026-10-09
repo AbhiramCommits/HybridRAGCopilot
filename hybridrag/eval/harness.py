@@ -1,17 +1,23 @@
-import os
-import json
-import random
-import time
 import argparse
+import json
+import os
+import time
+
 import numpy as np
+
 from hybridrag.config import settings
-from hybridrag.retrieval.hybrid import HybridRetriever
-from hybridrag.generate.generator import TemplateGenerator
 from hybridrag.eval.metrics import create_eval_questions
 from hybridrag.eval.scoring import (
-    recall_at_k, reciprocal_rank, ndcg_at_k, 
-    citation_precision, faithfulness, abstention_accuracy
+    abstention_accuracy,
+    citation_precision,
+    faithfulness,
+    ndcg_at_k,
+    recall_at_k,
+    reciprocal_rank,
 )
+from hybridrag.generate.generator import TemplateGenerator
+from hybridrag.retrieval.hybrid import HybridRetriever
+
 
 def run_eval(modes: list[str], embedding_backends: list[str], regression_mode: bool = False):
     if not os.path.exists("data/eval/questions.jsonl"):
@@ -43,7 +49,6 @@ def run_eval(modes: list[str], embedding_backends: list[str], regression_mode: b
                 gold_ids = q_item["gold_doc_ids"]
                 answerable = q_item["answerable"]
 
-                t0 = time.time()
                 candidates, timings = retriever.retrieve(query, k_out=20, mode=mode)
                 latencies.append(timings.timings.get("total", 0.0))
 
